@@ -1,0 +1,29 @@
+.protein-card {
+  background: #fef6f9;
+  border-radius: 20px;
+  padding: 20px;
+  margin-top: 30px;
+  max-width: 300px;
+  width: 100%;
+  box-shadow: 0 5px 15px rgba(255, 192, 203, 0.2);
+  color: #d63384;
+}
+
+.protein-card h3 {
+  margin-top: 0;
+  font-size: 18px;
+  color: #d63384;
+}
+
+.protein-card ul {
+  list-style: none;
+  padding: 0;
+}
+
+.protein-card li {
+  margin: 8px 0;
+  font-size: 14px;
+  background: #fff0f5;
+  padding: 8px 12px;
+  border-radius: 10px;
+}

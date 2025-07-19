@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🌸 Cute BMI Calculator</title>
+  <style>
+    :root {
+      --main-color: #ffb6c1;
+      --accent-color: #fff0f5;
+      --text-color: #333;
+      --bubble: #ffe4e1;
+      --ad-color: #fff8dc;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: var(--accent-color);
+      display: flex;
+      flex-direction: row;
+      min-height: 100vh;
+    }
+
+    .container {
+      flex: 1;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .card, .protein-card, .convert-card {
+      background: var(--bubble);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 10px 20px rgba(255, 182, 193, 0.3);
+      text-align: center;
+      max-width: 450px;
+      width: 100%;
+      margin-bottom: 30px;
+      transition: transform 0.2s;
+    }
+
+    .card:hover, .protein-card:hover, .convert-card:hover {
+      transform: scale(1.02);
+    }
+
+    h2, h3, h4 {
+      color: #d63384;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 12px;
+      border: 2px solid #fcb8d2;
+      font-size: 16px;
+      background: #fffdfd;
+    }
+
+    button {
+      padding: 12px 24px;
+      font-size: 18px;
+      background: var(--main-color);
+      color: white;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #ff6fa5;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #d63384;
+    }
+
+    .bmi-chart,
+    #bmiHistory,
+    .protein-card ul {
+      margin-top: 20px;
+      text-align: left;
+      font-size: 14px;
+      background: white;
+      border-radius: 15px;
+      padding: 15px;
+      box-shadow: 0 5px 15px rgba(255, 182, 193, 0.1);
+    }
+
+    .bmi-chart li,
+    #bmiHistory li,
+    .protein-card li {
+      margin: 5px 0;
+      background: #fff0f5;
+      padding: 8px 12px;
+      border-radius: 10px;
+    }
+
+    .ads {
+      width: 280px;
+      padding: 20px;
+      background: var(--ad-color);
+      border-left: 3px dashed #ffc107;
+      text-align: center;
+      font-size: 14px;
+      box-shadow: -5px 0 15px rgba(0,0,0,0.05);
+    }
+
+    @media (max-width: 768px) {
+      body {
+        flex-direction: column;
+        align-items: center;
+      }
+      .ads {
+        width: 100%;
+        border-left: none;
+        border-top: 3px dashed #ffc107;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- 🌸 BMI Calculator -->
+    <div class="card">
+      <h2>🌸 Cute BMI Calculator</h2>
+      <input type="number" id="weight" placeholder="Weight (kg)">
+      <input type="number" id="height" placeholder="Height (cm)">
+      <button onclick="calculateBMI()">Calculate BMI</button>
+      <div class="result" id="bmiResult">Your BMI will appear here 💖</div>
+
+      <div class="bmi-chart">
+        <h4>BMI Categories:</h4>
+        <ul>
+          <li>💀 &lt; 16 – Severely Underweight</li>
+          <li>😟 16 - 16.9 – Very Underweight</li>
+          <li>😕 17 - 18.4 – Underweight</li>
+          <li>😊 18.5 - 24.9 – Normal Weight</li>
+          <li>😐 25 - 29.9 – Overweight</li>
+          <li>😬 30 - 34.9 – Obese Class I</li>
+          <li>😖 35 - 39.9 – Obese Class II</li>
+          <li>💥 ≥ 40 – Obese Class III</li>
+        </ul>
+      </div>
+
+      <div id="bmiHistory" class="bmi-chart"></div>
+      <button onclick="clearHistory()" style="margin-top: 10px; background-color: #ffc2d1;">🧹 Clear History</button>
+    </div>
+
+    <!-- 🍽️ Protein Guide -->
+    <div class="protein-card">
+      <h3>🍽️ Protein Guide (per 100g)</h3>
+      <ul>
+        <li>🥚 Boiled Egg – <strong>13g</strong></li>
+        <li>🥛 Milk – <strong>3.4g</strong></li>
+        <li>🧀 Paneer – <strong>22g</strong></li>
+        <li>🥜 Peanuts – <strong>25g</strong></li>
+        <li>🌰 Almonds – <strong>21g</strong></li>
+        <li>🍚 Cooked Lentils – <strong>9g</strong></li>
+        <li>🥦 Broccoli – <strong>2.8g</strong></li>
+        <li>🍣 Tuna – <strong>29g</strong></li>
+      </ul>
+    </div>
+
+    <!-- 📏 Ft + In to CM Converter -->
+    <div class="convert-card">
+      <h3>📏 Ft & In ➜ CM Converter</h3>
+      <input type="number" id="feet" placeholder="Feet">
+      <input type="number" id="inches" placeholder="Inches">
+      <button onclick="convertToCM()">Convert</button>
+      <div class="result" id="cmResult">Your height in cm will show here 💡</div>
+    </div>
+  </div>
+
+  <!-- ✨ Ad Box -->
+  <div class="ads">
+    <h3>✨ Ad Space</h3>
+    Promote your cute merch, health tips, or kawaii channels right here 💕
+  </div>
+
+  <script>
+    function calculateBMI() {
+      const weight = parseFloat(document.getElementById("weight").value);
+      const heightCM = parseFloat(document.getElementById("height").value);
+
+      if (isNaN(weight) || isNaN(heightCM) || heightCM <= 0) {
+        document.getElementById("bmiResult").textContent = "Enter valid numbers, cutie!";
+        return;
+      }
+
+      const heightM = heightCM / 100;
+      const bmi = (weight / (heightM * heightM)).toFixed(2);
+      let category = "";
+
+      if (bmi < 16) category = "Severely Underweight 💀";
+      else if (bmi < 17) category = "Very Underweight 😟";
+      else if (bmi < 18.5) category = "Underweight 😕";
+      else if (bmi < 25) category = "Normal Weight 😊";
+      else if (bmi < 30) category = "Overweight 😐";
+      else if (bmi < 35) category = "Obese Class I 😬";
+      else if (bmi < 40) category = "Obese Class II 😖";
+      else category = "Obese Class III 💥";
+
+      const resultText = `BMI: ${bmi} — ${category}`;
+      document.getElementById("bmiResult").textContent = resultText;
+
+      const entry = {
+        bmi,
+        category,
+        weight,
+        height: heightCM.toFixed(0),
+        time: new Date().toLocaleString()
+      };
+
+      let history = JSON.parse(localStorage.getItem("bmiHistory")) || [];
+      history.unshift(entry);
+      if (history.length > 10) history.pop();
+      localStorage.setItem("bmiHistory", JSON.stringify(history));
+
+      displayHistory();
+    }
+
+    function displayHistory() {
+      const historyList = document.getElementById("bmiHistory");
+      const history = JSON.parse(localStorage.getItem("bmiHistory")) || [];
+
+      if (history.length === 0) {
+        historyList.innerHTML = "<p>No BMI history yet 💭</p>";
+        return;
+      }
+
+      historyList.innerHTML = "<h4>📜 Your BMI History:</h4><ul>" + history.map(entry => `
+        <li>
+          <strong>${entry.bmi}</strong> (${entry.category})<br>
+          🧍 ${entry.weight}kg / 📏 ${entry.height}cm<br>
+          🕒 ${entry.time}
+        </li>
+      `).join('') + "</ul>";
+    }
+
+    function clearHistory() {
+      localStorage.removeItem("bmiHistory");
+      displayHistory();
+    }
+
+    function convertToCM() {
+      const feetInput = document.getElementById("feet").value;
+      const inchesInput = document.getElementById("inches").value;
+
+      const feet = parseFloat(feetInput) || 0;
+      const inches = parseFloat(inchesInput) || 0;
+
+      if (feet < 0 || inches < 0) {
+        document.getElementById("cmResult").textContent = "Feet & inches can't be negative 😥";
+        return;
+      }
+
+      const cmFromFeet = feet * 30;
+      const cmFromInches = inches * 2.54;
+      const totalCM = cmFromFeet + cmFromInches;
+
+      document.getElementById("cmResult").textContent = `Your height is ${totalCM.toFixed(2)} cm ✨`;
+    }
+
+    window.onload = displayHistory;
+  </script>
+</body>
+</html>
